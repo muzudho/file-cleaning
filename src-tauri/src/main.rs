@@ -39,9 +39,16 @@ fn delete_file(src: String, dest: String) -> bool{
 */
 
 fn main() {
+    //*
     file_cleaning_lib::run()
+    // */
     /*
-    tauri::Biulder::default()
+    tauri::Builder::default()
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+    // */
+    /*
+    tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             scan_files,
             get_file_hash,
@@ -50,5 +57,5 @@ fn main() {
         ])
         .run(tauri::generate_context!())
         .expect("Error running Tauri app");
-    */
+    // */
 }

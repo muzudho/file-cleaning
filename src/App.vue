@@ -13,6 +13,11 @@ async function greet() {
 
 <template>
   <main class="container">
+
+    <div class="flex items-center justify-center min-h-screen bg-gray-900 text-while">
+      <h1 class="text-4xl font-bold text-fluent-blue">Hello, world!!</h1>
+    </div>
+
     <h1>Welcome to Tauri + Vue</h1>
 
     <div class="row">
@@ -45,6 +50,7 @@ async function greet() {
   filter: drop-shadow(0 0 2em #249b73);
 }
 
+.text-fluent-blue { color: #0078D4; }
 </style>
 <style>
 :root {

@@ -1,0 +1,8 @@
+{
+  "allowlist": {
+    "fs": {
+      "all": true,
+      "scope": ["$HOME/**"]
+    }
+  }
+}

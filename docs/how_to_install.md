@@ -2,6 +2,8 @@
 
 （パワーシェルではなく）コマンドプロンプトを使う。  
 
+TODO 次回から、`npm` ではなく、 `pnpm` を使うようにしたい。  
+
 ```shell
 npm install -g @tauri-apps/cli@^2.0
 npm install @tauri-apps/api

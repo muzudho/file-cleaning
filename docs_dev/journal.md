@@ -2,6 +2,8 @@
 
 ## [2025-05-24_Sat]
 
+TODO 次回から、`npm` ではなく、 `pnpm` を使うようにしたい。  
+
 ```shell
 node --version
     v22.16.0
@@ -77,3 +79,29 @@ npm run tauri dev
 npm run tauri dev
 ```
 
+`npm` ではなく、 `pnpm` に替えたい。  
+
+👇 以下のコマンドを打鍵する。  
+
+```shell
+# pnpm
+pnpm install
+```
+
+📄 `src-tauri/tauri.conf.json` を以下のように置換。  
+
+```
+    // "beforeDevCommand": "npm run dev",
+    "beforeDevCommand": "pnpm dev",
+
+    // "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "pnpm build",
+```
+
+📄 `package-lock.json` は削除。  
+
+👇 以下のコマンドを打鍵すると、開発モードで実行。  
+
+```shell
+pnpm dev
+```

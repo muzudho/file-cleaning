@@ -3,12 +3,6 @@
   "productName": "file-cleaning",
   "version": "0.1.0",
   "identifier": "com.warabenture.app",
-  "build": {
-    "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "npm run build",
-    "frontendDist": "../dist"
-  },
   "app": {
     "windows": [
       {
@@ -20,6 +14,12 @@
     "security": {
       "csp": null
     }
+  },
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
   },
   "bundle": {
     "active": true,

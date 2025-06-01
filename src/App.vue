@@ -1,32 +1,51 @@
 <script setup lang="ts">
 import { ref } from "vue";
-//import { invoke } from "@tauri-apps/api/core";
+//import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from "@tauri-apps/api/core";
+
 import { open } from "@tauri-apps/plugin-dialog";
 
 // ビューモデル。
-const greetMsg = ref("");
+const greetMsgVM = ref("");
 const openFolderPathVM = ref("");
 
+const directoryPathVM = ref('');
+const fileListVM = ref<string[]>([]);
+const errorVM = ref('');
+
+async function fetchFileList() {
+  try {
+    // 例： C:/Users/muzud/OneDrive/デスクトップ/新しいフォルダー
+    console.log(`ディレクトリー：${directoryPathVM.value}`)
+    fileListVM.value = await invoke('get_file_list', { directory_path: directoryPathVM.value });
+    errorVM.value = '';
+  } catch (err) {
+    errorVM.value = 'エラー: ' + (err as string);
+    fileListVM.value = [];
+  }
+}
+
 // ［フォルダーを開く］ボタンクリック時。
-const on_openFolderButton_clicked = async() => {
+async function on_openFolderButton_clicked() {
   try {
     console.log("［フォルダーを開く］ボタン押下")
 
     // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    //greetMsg.value = await invoke("greet", { name: openFolderPathVM.value });
-    //greetMsg.value = await invoke("greet", { name: "テスト１" });
+    //greetMsgVM.value = await invoke("greet", { name: openFolderPathVM.value });
+    //greetMsgVM.value = await invoke("greet", { name: "テスト１" });
 
     //*
     // Open a selection dialog for image files
-    const selected = await open({
+    //const selectedFilePath = await invoke('open_file_dialog');
+    const selectedFilePath = await open({
       multiple: false,
-      directory: false,
+      directory: true,
     }); 
-    console.log(selected)
+    console.log(selectedFilePath)
 
-    if (Array.isArray(selected)) {
+    if (Array.isArray(selectedFilePath)) {
       // user selected multiple files
-    } else if (selected === null) {
+    } else if (selectedFilePath === null) {
       // user cancelled the selection
     } else {
       // user selected a single file
@@ -41,6 +60,16 @@ const on_openFolderButton_clicked = async() => {
 <template>
   <main class="container">
 
+  <div>
+    <h1>ファイル一覧アプリ</h1>
+    <input v-model="directoryPathVM" placeholder="ディレクトリパスを入力 (例: /home/user)" />
+    <button @click="fetchFileList">ファイル一覧を取得</button>
+    <ul v-if="fileListVM.length">
+      <li v-for="file in fileListVM" :key="file">{{ file }}</li>
+    </ul>
+    <p v-if="errorVM">{{ errorVM }}</p>
+  </div>
+
     <h1>ファイル・クリーニング</h1>
 
     <h2>手順１：</h2>
@@ -52,7 +81,7 @@ const on_openFolderButton_clicked = async() => {
         <button type="submit">フォルダーを開く</button>
       </p>
     </form>
-    <p>{{ greetMsg }}</p>
+    <p>{{ greetMsgVM }}</p>
   </main>
 </template>
 
@@ -195,4 +224,22 @@ button {
   }
 }
 
+div {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+input {
+  padding: 8px;
+  margin-right: 10px;
+}
+button {
+  padding: 8px 16px;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  padding: 5px 0;
+}
 </style>

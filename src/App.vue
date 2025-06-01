@@ -1,15 +1,40 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
+//import { invoke } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-dialog";
 
 // ビューモデル。
 const greetMsg = ref("");
 const openFolderPathVM = ref("");
 
 // ［フォルダーを開く］ボタンクリック時。
-async function on_openFolderButton_clicked() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: openFolderPathVM.value });
+const on_openFolderButton_clicked = async() => {
+  try {
+    console.log("［フォルダーを開く］ボタン押下")
+
+    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+    //greetMsg.value = await invoke("greet", { name: openFolderPathVM.value });
+    //greetMsg.value = await invoke("greet", { name: "テスト１" });
+
+    //*
+    // Open a selection dialog for image files
+    const selected = await open({
+      multiple: false,
+      directory: false,
+    }); 
+    console.log(selected)
+
+    if (Array.isArray(selected)) {
+      // user selected multiple files
+    } else if (selected === null) {
+      // user cancelled the selection
+    } else {
+      // user selected a single file
+    }
+    // */
+  } catch(error) {
+    console.error("Error has occured when read file: ", error);
+  }
 }
 </script>
 
@@ -146,7 +171,7 @@ button {
   outline: none;
 }
 
-#greet-input {
+#open-folder-path-input {
   margin-right: 5px;
 }
 

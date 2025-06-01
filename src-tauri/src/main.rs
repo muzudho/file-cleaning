@@ -25,7 +25,6 @@ fn scan_files_1(path: String) -> Vec<String> {
     files
 }
 // */
-
 /*
 #[tauri::command]
 fn scan_files_2(app: tauri::AppHandle, path: String) -> Result<Vec<String>, String> {
@@ -50,7 +49,6 @@ fn get_file_hash_1(path: String) -> String {
     format!("{:x}", hasher.finalize())
 }
 // */
-
 /*
 #[tauri::command]
 fn get_file_hash_2(app: tauri::AppHandle, path: String) -> Result<String, String> {
@@ -66,24 +64,24 @@ fn get_file_hash_2(app: tauri::AppHandle, path: String) -> Result<String, String
 
 //*
 #[tauri::command]
-fn delete_file(path: String) -> bool{
+fn delete_file(path: String) -> bool {
     std::fs::remove_file(path).is_ok()
 }
 // */
-
 //*
 #[tauri::command]
-fn move_file(src: String, dest: String) -> bool{
+fn move_file(src: String, dest: String) -> bool {
     std::fs::rename(src, dest).is_ok()
 }
 // */
-
 fn main() {
     /*
     file_cleaning_lib::run()
     // */
     /*
     tauri::Builder::default()
+        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_dialog::init())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
     // */

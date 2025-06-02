@@ -11,9 +11,18 @@ use sha2::{Digest, Sha256};
 //use tauri::command;
 use std::fs;
 
+//use tauri_plugin_dialog::DialogExt;
+
+
 // ディレクトリ内のファイル一覧を取得するコマンド
 #[tauri::command]
 fn get_file_list(directory_path: String) -> Result<Vec<String>, String> {
+    // app: tauri::AppHandle
+    // , 
+
+    //let directory_path = app.dialog().file().blocking_pick_file();
+    // return a file_path `Option`, or `None` if the user closes the dialog
+
     // ディレクトリを読み込む
     let entries = match fs::read_dir(&directory_path) {
         Ok(entries) => entries,

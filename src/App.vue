@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-//import { invoke } from '@tauri-apps/api/tauri';
+
+// フロントエンドからバックエンドの関数を呼ぶ仕組み。
 import { invoke } from "@tauri-apps/api/core";
 
-import { open } from "@tauri-apps/plugin-dialog";
+import { open } from '@tauri-apps/plugin-dialog';
 
 // ビューモデル。
 const greetMsgVM = ref("");
@@ -13,12 +14,19 @@ const directoryPathVM = ref('');
 const fileListVM = ref<string[]>([]);
 const errorVM = ref('');
 
-async function fetchFileList() {
+async function on_invoke_test_button_clicked() {
+    console.log("［インボーク・テスト］ボタンをクリックしました。")
+}
+
+async function on_fetch_File_list() {
   try {
+    errorVM.value = '';
     // 例： C:/Users/muzud/OneDrive/デスクトップ/新しいフォルダー
     console.log(`ディレクトリー：${directoryPathVM.value}`)
     fileListVM.value = await invoke('get_file_list', { directory_path: directoryPathVM.value });
-    errorVM.value = '';
+    console.log("`ファイル一覧読取後。")
+    //fileListVM.value = await invoke('app', this);
+    errorVM.value = 'エラー無し。';
   } catch (err) {
     errorVM.value = 'エラー: ' + (err as string);
     fileListVM.value = [];
@@ -39,8 +47,8 @@ async function on_openFolderButton_clicked() {
     //const selectedFilePath = await invoke('open_file_dialog');
     const selectedFilePath = await open({
       multiple: false,
-      directory: true,
-    }); 
+      directory: false,
+    });
     console.log(selectedFilePath)
 
     if (Array.isArray(selectedFilePath)) {
@@ -61,9 +69,14 @@ async function on_openFolderButton_clicked() {
   <main class="container">
 
   <div>
+    <h1>動作確認：</h1>
+    <form @submit.prevent="on_invoke_test_button_clicked">
+      <button type="submit">インボーク・テスト</button>
+    </form>
+
     <h1>ファイル一覧アプリ</h1>
     <input v-model="directoryPathVM" placeholder="ディレクトリパスを入力 (例: /home/user)" />
-    <button @click="fetchFileList">ファイル一覧を取得</button>
+    <button @click="on_fetch_File_list">ファイル一覧を取得</button>
     <ul v-if="fileListVM.length">
       <li v-for="file in fileListVM" :key="file">{{ file }}</li>
     </ul>

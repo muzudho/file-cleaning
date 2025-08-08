@@ -16,6 +16,8 @@ const errorVM = ref('');
 
 async function on_invoke_test_button_clicked() {
     console.log("［インボーク・テスト］ボタンをクリックしました。")
+    let s = await invoke("test_invoke_1", {});
+    console.log(`インボーク・テストの結果＝${s}`)
 }
 
 async function on_fetch_File_list() {

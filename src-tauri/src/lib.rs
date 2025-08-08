@@ -39,6 +39,12 @@ pub fn get_file_list(directory_path: String) -> Result<Vec<String>, String> {
 }
 */
 
+// 動作確認。
+#[tauri::command]
+fn test_invoke_1() -> String {
+    "インボークの動作確認１。".to_string()
+}
+
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -51,7 +57,10 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         //.plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![
+            test_invoke_1,
+            greet
+        ])
         //.run(tauri::generate_context!())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

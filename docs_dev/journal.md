@@ -24,7 +24,7 @@ npm install -g @tauri-apps/cli
     run `npm fund` for details
 
 npm fund
-    file-cleaning@0.1.0
+    file-cleaning-tauri-desktopapp@0.1.0
 
 tauri --version
     tauri-cli 2.5.0
@@ -37,7 +37,7 @@ rustup target add x86_64-pc-windows-msvc
 ```shell
 npm install
 npm fund
-    file-cleaning@0.1.0
+    file-cleaning-tauri-desktopapp@0.1.0
     ├── https://opencollective.com/tauri
     │   └── @tauri-apps/api@2.5.0, @tauri-apps/cli@2.5.0
     ├─┬ https://github.com/vitejs/vite?sponsor=1

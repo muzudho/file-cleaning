@@ -1,4 +1,4 @@
-# file-cleaning
+# file-cleaning-tauri-desktopapp
 
 ファイル掃除
 

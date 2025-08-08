@@ -994,7 +994,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "file-cleaning"
+name = "file-cleaning-tauri-desktopapp"
 version = "0.1.0"
 dependencies = [
  "serde",

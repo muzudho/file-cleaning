@@ -1,3 +1,36 @@
+<template>
+    <main class="container">
+
+        <div>
+            <h1>動作確認：</h1>
+            <form @submit.prevent="on_invoke_test_button_clicked">
+                <button type="submit">インボーク・テスト</button>
+            </form>
+
+            <h1>ファイル一覧アプリ</h1>
+            <input v-model="directoryPathVM" placeholder="ディレクトリパスを入力 (例: /home/user)" />
+            <button @click="on_fetch_File_list">ファイル一覧を取得</button>
+            <ul v-if="fileListVM.length">
+                <li v-for="file in fileListVM" :key="file">{{ file }}</li>
+            </ul>
+            <p v-if="errorVM">{{ errorVM }}</p>
+        </div>
+
+        <h1>ファイル・クリーニング</h1>
+
+        <h2>手順１：</h2>
+        <!-- class="row" -->
+        <form @submit.prevent="on_openFolderButton_clicked">
+            <p class="p2">フォルダーを選択してください。</p>
+            <p class="p2">
+                <input id="open-folder-path-input" v-model="openFolderPathVM" placeholder="Enter a folder path..." value="Z:\\Muzudho Backup" />
+                <button type="submit">フォルダーを開く</button>
+            </p>
+        </form>
+        <p>{{ greetMsgVM }}</p>
+    </main>
+</template>
+
 <script setup lang="ts">
     import { ref } from "vue";
 
@@ -66,39 +99,6 @@
         }
     }
 </script>
-
-<template>
-    <main class="container">
-
-        <div>
-            <h1>動作確認：</h1>
-            <form @submit.prevent="on_invoke_test_button_clicked">
-                <button type="submit">インボーク・テスト</button>
-            </form>
-
-            <h1>ファイル一覧アプリ</h1>
-            <input v-model="directoryPathVM" placeholder="ディレクトリパスを入力 (例: /home/user)" />
-            <button @click="on_fetch_File_list">ファイル一覧を取得</button>
-            <ul v-if="fileListVM.length">
-                <li v-for="file in fileListVM" :key="file">{{ file }}</li>
-            </ul>
-            <p v-if="errorVM">{{ errorVM }}</p>
-        </div>
-
-        <h1>ファイル・クリーニング</h1>
-
-        <h2>手順１：</h2>
-        <!-- class="row" -->
-        <form @submit.prevent="on_openFolderButton_clicked">
-            <p class="p2">フォルダーを選択してください。</p>
-            <p class="p2">
-                <input id="open-folder-path-input" v-model="openFolderPathVM" placeholder="Enter a folder path..." value="Z:\\Muzudho Backup" />
-                <button type="submit">フォルダーを開く</button>
-            </p>
-        </form>
-        <p>{{ greetMsgVM }}</p>
-    </main>
-</template>
 
 <style scoped>
     .logo.vite:hover {
